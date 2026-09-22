@@ -53,6 +53,14 @@ header.top{position:sticky;top:0;z-index:20;background:rgba(245,243,236,.95);bac
 .photopick{display:flex;align-items:center;gap:14px;margin-top:6px}
 .photopick img{width:84px;aspect-ratio:3/4;object-fit:cover;border-radius:10px;background:#EDEAE1}
 .savehint{background:var(--brass-soft);color:#7a5e28;font-size:13px;font-weight:600;padding:8px 12px;border-radius:10px;margin-top:8px}
+.memobox{margin-top:20px}
+.memobox label{display:block;font-size:13px;font-weight:800;color:var(--ink-soft);margin:0 0 7px;display:flex;align-items:center;gap:6px}
+.memobox textarea{width:100%;font:inherit;font-size:16px;line-height:1.5;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);outline:none;resize:vertical;min-height:80px}
+.memobox textarea:focus{border-color:var(--brass);box-shadow:0 0 0 3px var(--brass-soft)}
+.memohint{font-size:12px;color:var(--ink-soft);margin-top:6px}
+.memohint b{color:var(--brass)}
+.card .nm .memomark{color:var(--brass);font-size:14px;margin-left:4px;vertical-align:middle}
+.detail .memomark{color:var(--brass);font-size:16px}
 body:not(.js) .js-only{display:none!important}
 body.js .nojs-only{display:none!important}
 
@@ -69,14 +77,16 @@ body.js .nojs-only{display:none!important}
 .rolelist .chip:active{background:#F0ECE1}
 .rolelist .chip.active{background:var(--brass-soft)}
 .rolelist .chip .n{opacity:.55;font-weight:600;font-size:13px}
-</style></head><body><div class="wrap"><a id="top"></a><header class="top"><div class="brand"><h1>교회 요람 · 사진 찾기</h1><span class="cnt" id="cnt"></span></div><div class="searchbox" id="searchbox" style="display:none"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input id="q" type="search" inputmode="search" placeholder="이름을 입력하세요 (예: 김영순)" autocomplete="off"><button class="clear" id="clr">×</button></div></header><details class="rolemenu" id="rolemenu"><summary id="roleSummary"><span class="rlab">직분 선택 (전체 보기)</span><span class="caret">▾</span></summary><div class="rolelist" id="rolelist"></div></details><div id="loading" class="empty">명단을 불러오는 중…</div><div id="list"></div><div class="empty hide" id="empty">검색 결과가 없습니다.</div></div><button class="toggle" id="adminToggle">관리 모드</button><div class="adminbar hide" id="adminbar"><button class="btn primary" id="addBtn">+ 추가</button><button class="btn" id="exportBtn">내보내기</button></div><div class="ov" id="detailOv"><div class="sheet"><div class="grip"></div><div class="detail"><img id="dImg" alt=""><div><div class="dn" id="dName"></div><div class="dr" id="dRole"></div></div></div><div class="rowbtns" id="detailBtns"></div></div></div><div class="ov" id="editOv"><div class="sheet"><div class="grip"></div><div class="form"><label>이름</label><input id="fName" placeholder="이름"><label>직분</label><input id="fRole" placeholder="예: 시무권사"><label>사진</label><div class="photopick"><img id="fImg" alt=""><input type="file" id="fFile" accept="image/*"></div><div class="savehint">이 수정은 <b>내 폰에만</b> 저장됩니다. 전체 반영은 관리자가 data.json을 교체해야 합니다.</div></div><div class="rowbtns"><button class="btn" id="cancelEdit">취소</button><button class="btn primary" id="saveEdit">저장</button></div><div class="rowbtns" style="margin-top:10px"><button class="btn danger hide" id="deleteEntry">이 사람 삭제</button></div></div></div><script>
+</style></head><body><div class="wrap"><a id="top"></a><header class="top"><div class="brand"><h1>교회 요람 · 사진 찾기</h1><span class="cnt" id="cnt"></span></div><div class="searchbox" id="searchbox" style="display:none"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input id="q" type="search" inputmode="search" placeholder="이름을 입력하세요 (예: 김영순)" autocomplete="off"><button class="clear" id="clr">×</button></div></header><details class="rolemenu" id="rolemenu"><summary id="roleSummary"><span class="rlab">직분 선택 (전체 보기)</span><span class="caret">▾</span></summary><div class="rolelist" id="rolelist"></div></details><div id="loading" class="empty">명단을 불러오는 중…</div><div id="list"></div><div class="empty hide" id="empty">검색 결과가 없습니다.</div></div><button class="toggle" id="adminToggle">관리 모드</button><div class="adminbar hide" id="adminbar"><button class="btn primary" id="addBtn">+ 추가</button><button class="btn" id="exportBtn">내보내기</button></div><div class="ov" id="detailOv"><div class="sheet"><div class="grip"></div><div class="detail"><img id="dImg" alt=""><div><div class="dn" id="dName"></div><div class="dr" id="dRole"></div></div></div><div class="memobox"><label>📝 내 메모</label><textarea id="dMemo" placeholder="이 분에 대한 메모를 남겨보세요 (예: 3층 예배실, 연락처, 기도제목 등)"></textarea><div class="memohint">메모는 <b>내 폰에만</b> 저장됩니다. 자동으로 저장돼요.</div></div><div class="rowbtns" id="detailBtns"></div></div></div><div class="ov" id="editOv"><div class="sheet"><div class="grip"></div><div class="form"><label>이름</label><input id="fName" placeholder="이름"><label>직분</label><input id="fRole" placeholder="예: 시무권사"><label>사진</label><div class="photopick"><img id="fImg" alt=""><input type="file" id="fFile" accept="image/*"></div><div class="savehint">이 수정은 <b>내 폰에만</b> 저장됩니다. 전체 반영은 관리자가 data.json을 교체해야 합니다.</div></div><div class="rowbtns"><button class="btn" id="cancelEdit">취소</button><button class="btn primary" id="saveEdit">저장</button></div><div class="rowbtns" style="margin-top:10px"><button class="btn danger hide" id="deleteEntry">이 사람 삭제</button></div></div></div><script>
 var ROLE_ORDER=["시무장로","원로장로","은퇴장로","협동장로","안수집사","은퇴집사","협동안수집사","명예집사(남)","시무권사","은퇴권사","협동권사","명예권사","명예집사(여)"];
 var SIL="";
 var people=[], q="", activeRole="전체";
 var KEY="church_dir_ops_v3";
-var ops={mods:{},dels:[],adds:[]};
-try{var s=localStorage.getItem(KEY); if(s) ops=JSON.parse(s);}catch(e){}
+var ops={mods:{},dels:[],adds:[],memos:{}};
+try{var s=localStorage.getItem(KEY); if(s){var _o=JSON.parse(s); ops.mods=_o.mods||{}; ops.dels=_o.dels||[]; ops.adds=_o.adds||[]; ops.memos=_o.memos||{};}}catch(e){}
 function saveOps(){try{localStorage.setItem(KEY,JSON.stringify(ops));}catch(e){}}
+function getMemo(id){return (ops.memos&&ops.memos[id])||'';}
+function setMemo(id,txt){ops.memos=ops.memos||{}; txt=(txt||'').trim(); if(txt)ops.memos[id]=txt; else delete ops.memos[id]; saveOps();}
 
 function esc(t){return (t||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
 
@@ -88,6 +98,7 @@ function buildFromData(raw){
     var m=ops.mods[p.id]; if(m){return {id:p.id,name:m.name,role:m.role,img:m.img||p.img};} return p;
   });
   (ops.adds||[]).forEach(function(a){ if(!del[a.id]) people.push({id:a.id,name:a.name,role:a.role,img:a.img}); });
+  people.forEach(function(p){ p.memo=getMemo(p.id); });
 }
 function rolesInOrder(){
   var present={}; people.forEach(function(p){present[p.role]=(present[p.role]||0)+1;});
@@ -104,9 +115,10 @@ function render(){
     var r=pair[0]; var g=groups[r].slice().sort(function(a,b){return a.name<b.name?-1:1;});
     var cards="";
     g.forEach(function(p){
-      cards+='<button class="card" data-id="'+p.id+'" data-name="'+esc(p.name)+'" data-role="'+esc(r)+'">'
+      var mk=p.memo?'<span class="memomark" title="메모 있음">📝</span>':'';
+      cards+='<button class="card" data-id="'+p.id+'" data-name="'+esc(p.name)+'" data-role="'+esc(r)+'" data-memo="'+esc(p.memo)+'">'
         +'<img class="ph" loading="lazy" src="'+p.img+'" alt="'+esc(p.name)+'">'
-        +'<div class="meta"><div class="nm">'+esc(p.name)+'</div><span class="rl">'+esc(r)+'</span></div></button>';
+        +'<div class="meta"><div class="nm">'+esc(p.name)+mk+'</div><span class="rl">'+esc(r)+'</span></div></button>';
     });
     htmlp+='<section class="grp" id="grp-'+r+'"><h2 class="ghead">'+r+'<span class="gcount">'+g.length+'</span></h2><div class="grid">'+cards+'</div></section>';
   });
@@ -123,7 +135,7 @@ function apply(){
   var cards=document.querySelectorAll('.card');
   cards.forEach(function(c){
     var okR=(activeRole==="전체"||c.dataset.role===activeRole);
-    var okQ=(!qq||c.dataset.name.indexOf(qq)>=0);
+    var okQ=(!qq||c.dataset.name.indexOf(qq)>=0||(c.dataset.memo&&c.dataset.memo.indexOf(qq)>=0));
     var show=okR&&okQ; c.classList.toggle('hide',!show); if(show)any=true;
   });
   document.querySelectorAll('.grp').forEach(function(sx){
@@ -150,11 +162,14 @@ function wireMenu(){
     };
   });
 }
+var detailId=null;
 function openDetail(id){
   var p=findById(id); if(!p)return;
+  detailId=id;
   document.getElementById('dImg').src=p.img||'';
   document.getElementById('dName').textContent=p.name;
   document.getElementById('dRole').textContent=p.role||'';
+  document.getElementById('dMemo').value=getMemo(id);
   var b=document.getElementById('detailBtns');
   b.innerHTML='<button class="btn" onclick="closeOv(\'detailOv\')">닫기</button>';
   if(adminOn){var e=document.createElement('button');e.className='btn primary';e.textContent='수정';e.onclick=function(){closeOv('detailOv');openEdit(id);};b.appendChild(e);}
@@ -169,6 +184,18 @@ function openEdit(id){
   document.getElementById('fFile').value='';
   document.getElementById('deleteEntry').classList.toggle('hide',!id);
   showOv('editOv');
+}
+document.getElementById('dMemo').addEventListener('input',function(){
+  if(!detailId)return;
+  setMemo(detailId,this.value);
+  var p=findById(detailId); if(p)p.memo=getMemo(detailId);
+});
+function refreshCardMemo(id){
+  var c=document.querySelector('.card[data-id="'+id+'"]'); if(!c)return;
+  var memo=getMemo(id); c.dataset.memo=memo;
+  var nm=c.querySelector('.nm'); if(!nm)return;
+  var p=findById(id); var base=esc(p?p.name:'');
+  nm.innerHTML=base+(memo?'<span class="memomark" title="메모 있음">📝</span>':'');
 }
 document.getElementById('fFile').addEventListener('change',function(e){
   var f=e.target.files[0]; if(!f)return; var r=new FileReader();
@@ -200,13 +227,13 @@ document.getElementById('adminToggle').onclick=function(){
 };
 document.getElementById('addBtn').onclick=function(){openEdit(null);};
 document.getElementById('exportBtn').onclick=function(){
-  var out=people.map(function(p){return {name:p.name,role:p.role,img:p.img};});
+  var out=people.map(function(p){var o={name:p.name,role:p.role,img:p.img}; if(p.memo)o.memo=p.memo; return o;});
   var blob=new Blob([JSON.stringify(out)],{type:'application/json'});
   var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='data.json'; a.click();
 };
 function showOv(id){document.getElementById(id).classList.add('show');}
-function closeOv(id){document.getElementById(id).classList.remove('show');}
-document.querySelectorAll('.ov').forEach(function(ov){ov.addEventListener('click',function(e){if(e.target===ov)ov.classList.remove('show');});});
+function closeOv(id){document.getElementById(id).classList.remove('show'); if(id==='detailOv'&&detailId){refreshCardMemo(detailId); apply();}}
+document.querySelectorAll('.ov').forEach(function(ov){ov.addEventListener('click',function(e){if(e.target===ov){ov.classList.remove('show'); if(ov.id==='detailOv'&&detailId){refreshCardMemo(detailId); apply();}}});});
 document.getElementById('q').addEventListener('input',function(){q=this.value;apply();});
 document.getElementById('clr').onclick=function(){document.getElementById('q').value='';q='';apply();document.getElementById('q').focus();};
 document.addEventListener('click',function(e){var dt=document.getElementById('rolemenu'); if(dt&&dt.open&&!dt.contains(e.target))dt.open=false;});
@@ -218,6 +245,10 @@ fetch('data.json?v='+Date.now()).then(function(r){return r.json();}).then(functi
   window.__RAW__=raw;
   if(raw.length){ /* derive silhouette from first entry that is svg, else default */
     for(var i=0;i<raw.length;i++){ if((raw[i].img||'').indexOf('image/svg')>=0){SIL=raw[i].img;break;} }
+    /* seed memos from data.json only when this phone has no local memo yet (don't overwrite personal notes) */
+    ops.memos=ops.memos||{};
+    raw.forEach(function(p,i){ var id="s"+i; if(p.memo&&!ops.memos[id])ops.memos[id]=p.memo; });
+    saveOps();
   }
   buildFromData(raw); render();
   document.getElementById('loading').style.display='none';
